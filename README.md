@@ -36,8 +36,12 @@ Main contributors
 Zayn B. ([@BaizaOP](https://github.com/BaizaOP))  
 Sukhesh S. ([@sukheshCoding](https://github.com/sukheshCoding))
 
-The Champ
+The Boys
 Adit G. ([@Adit-champ](https://github.com/Adit-champ))
+Immanuel M.
+Timothy G.
+Andrew S.
+Mr. S
 
 ## Version History
 
