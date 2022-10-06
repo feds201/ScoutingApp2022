@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">FEDS Scouting</string>
+    <string name="menu_home_title">Home</string>
+    <string name="menu_dashboard_title">Input</string>
+    <string name="menu_history_title">History</string>
+    <string name="menu_settings_title">Settings</string>
+    <string name="home_matches_title">Matches</string>
+    <string name="dashboard_title">Title</string>
+    <string name="dashboard_teamNum">Team #</string>
+    <string name="dashboard_color">Color</string>
+    <string name="dashboard_autonomous_title">Autonomous</string>
+    <string name="dashboard_high_title">High</string>
+    <string name="dashboard_makes_title">Makes</string>
+    <string name="dashboard_misses_title">Misses</string>
+    <string name="dashboard_low_title">Low</string>
+    <string name="dashboard_teleop_title">Teleop</string>
+    <string name="dashboard_endgame_title">Endgame</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="zero">0</string>
+    <string name="leaves_tarmac_title">Leaves Tarmac?</string>
+    <string name="human_scored_title">Human Scored?</string>
+    <string name="played_defence_title">Played Defence?</string>
+    <string name="bar_climbed_title">Bar Climbed:</string>
+    <string name="overall_rating_title">Overall Rating</string>
+    <string name="finish_title">Finish</string>
+</resources>
