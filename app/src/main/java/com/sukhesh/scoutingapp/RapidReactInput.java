@@ -108,6 +108,16 @@ public class RapidReactInput extends Fragment {
                 c.value = c.check.isChecked();
                 storage.add(matchName, c.name, c.value);
             });
+            c.text.setOnClickListener(view -> {
+                boolean isChecked = c.check.isChecked();
+                if(isChecked) {
+                    c.check.setChecked(false);
+                    storage.add(matchName, c.name, false);
+                } else {
+                    c.check.setChecked(true);
+                    storage.add(matchName, c.name, true);
+                }
+            });
         }
 
 
