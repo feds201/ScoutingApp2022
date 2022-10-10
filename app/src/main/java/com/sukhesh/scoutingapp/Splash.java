@@ -1,6 +1,7 @@
     package com.sukhesh.scoutingapp;
 
     import android.content.Intent;
+    import android.content.res.Configuration;
     import android.os.Bundle;
     import android.os.Handler;
     import android.os.Looper;
@@ -12,7 +13,12 @@
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        Configuration config = getResources().getConfiguration();
+        if (config.smallestScreenWidthDp >= 600) {
+            setContentView(R.layout.activity_splash);
+        } else {
+            setContentView(R.layout.activity_splash_phone);
+        }
         //hide annoying toolbar
 
         //Run the splash screen for 4 seconds and switch to main activity

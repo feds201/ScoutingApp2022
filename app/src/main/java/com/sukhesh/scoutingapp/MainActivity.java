@@ -6,6 +6,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.fragment.app.Fragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
      * does the work of "inflating" (showing) the corresponding fragment when you select it from the
      * shared bottom navigation bar.
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

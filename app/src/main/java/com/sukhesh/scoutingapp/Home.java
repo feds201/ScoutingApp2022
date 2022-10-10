@@ -2,10 +2,12 @@ package com.sukhesh.scoutingapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -21,14 +23,19 @@ import org.json.JSONException;
 
 
 public class Home extends Fragment {
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /*
          * Set up the RecyclerView (essentially a list of items) for the list of quals
          */
         // access to this view (see fragment_home.xml)
-        View homeView = inflater.inflate(R.layout.fragment_home, container, false);
+        View homeView;
+        Configuration config = getResources().getConfiguration();
+        if (config.smallestScreenWidthDp >= 600) {
+            homeView = inflater.inflate(R.layout.fragment_home, container, false);
+        } else {
+            homeView = inflater.inflate(R.layout.fragment_home_phone, container, false);
+        }
         // access to the view's recycler view object
         RecyclerView qualsList = homeView.findViewById(R.id.rvQuals);
         // set the layout for the recycler

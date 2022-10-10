@@ -2,6 +2,7 @@ package com.sukhesh.scoutingapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
@@ -23,7 +24,13 @@ public class QRPage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_qr, container, false);
+        View rootView;
+        Configuration config = getResources().getConfiguration();
+        if (config.smallestScreenWidthDp >= 600) {
+            rootView = inflater.inflate(R.layout.fragment_qr, container, false);
+        } else {
+            rootView = inflater.inflate(R.layout.fragment_qr_phone, container, false);
+        }
         //Somehow have to combine shared preferences of all the inputs in dashboard and put it all into the qr good luck zayn
         SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
         JSONStorage storage = new JSONStorage(sp);

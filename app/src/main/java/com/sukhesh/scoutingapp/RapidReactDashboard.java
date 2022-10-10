@@ -2,6 +2,7 @@ package com.sukhesh.scoutingapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.core.content.res.ResourcesCompat;
@@ -45,7 +46,13 @@ public class RapidReactDashboard extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_rapid_react_dashboard, container, false);
+        View rootView;
+        Configuration config = getResources().getConfiguration();
+        if (config.smallestScreenWidthDp >= 600) {
+            rootView = inflater.inflate(R.layout.fragment_rapid_react_dashboard, container, false);
+        } else {
+            rootView = inflater.inflate(R.layout.fragment_rapid_react_dashboard_phone, container, false);
+        }
         SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
         String matchName = sp.getString("currentMatch", "Q1");
         JSONStorage storage = new JSONStorage(sp);
@@ -202,7 +209,6 @@ public class RapidReactDashboard extends Fragment {
         //Finish Button
         Button finish = rootView.findViewById(R.id.finish);
         finish.setOnClickListener(view -> getParentFragmentManager().beginTransaction().replace(R.id.body_container, new QRPage()).commit());
-
         return rootView;
     }
 
