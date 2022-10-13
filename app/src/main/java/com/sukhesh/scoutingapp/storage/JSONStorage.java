@@ -31,13 +31,13 @@ public class JSONStorage {
         JSONObject jo = new JSONObject();
         for (String value : rawMatchList) {
             String[] s = value.split(",");
-            String match = s[0] + s[1] + " " + s[4];
+            String match = s[0] + s[1] + " " + s[3];
             JSONObject j = new JSONObject();
             j.put("matchType", s[0]);
             j.put("matchNumber", Integer.parseInt(s[1]));
             j.put("teamNumber", Integer.parseInt(s[2]));
-            j.put("teamName", s[3]);
-            j.put("robotAllianceInfo", s[4]);
+            //j.put("teamName", s[3]);
+            j.put("robotAllianceInfo", s[3]);
             jo.put(match, j);
         }
         SharedPreferences.Editor spEditor = sp.edit();

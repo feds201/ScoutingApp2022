@@ -4,19 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -25,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.sukhesh.scoutingapp.api.BlueAllianceAPI;
 import com.sukhesh.scoutingapp.storage.JSONStorage;
 
 import org.json.JSONException;
@@ -37,6 +31,23 @@ public class Home extends Fragment {
          * Set up the RecyclerView (essentially a list of items) for the list of quals
          */
         // access to this view (see fragment_home.xml)
+        // TODO: create a button / input to achieve this!
+
+        SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
+        new Thread(() -> {
+            String rawMatches = BlueAllianceAPI.RequestMatchesByEventCode("2021mibg", "5ED1uRm7sTzNCXRwuSyPUnFt3uFuDVpO0lZKFQplA2EjCOsqwSWNzQpqwTTRM2ba");
+            BlueAllianceAPI.SendRawMatchesToSharedPreferences(sp, rawMatches); // TODO: possibly error prone based on how long the request takes....
+        }).start();
+
+        String rawMatches = BlueAllianceAPI.GetRawMatchesFromSharedPreferences(sp);
+
+        // TODO: ideally the color code would come from a LIST or a DROPDOWN so no one messes it up
+        String[] matches = BlueAllianceAPI.returnMatchListFromRequestString(rawMatches, "B1");
+        assert matches != null;
+        for(String s: matches) {
+            Log.d("matches", s);
+        }
+
         View homeView;
         Configuration config = getResources().getConfiguration();
         if (config.smallestScreenWidthDp >= 600) {
@@ -62,13 +73,13 @@ public class Home extends Fragment {
          */
         // collect the matches from strings.xml
         String[] rawStringValues = getResources().getStringArray(R.array.quals);
-        SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
 
         // if you already loaded the matches, then don't overwrite data
+        sp.edit().putString("json", "").apply();
         String rawJSONValue = sp.getString("json", "");
         if (rawJSONValue.equals("")) {
             try {
-                JSONStorage.addMatches(sp, rawStringValues);
+                JSONStorage.addMatches(sp, matches);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

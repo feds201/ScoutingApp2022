@@ -5,7 +5,7 @@
         <item>AA,matchType,String</item>
         <item>AB,matchNumber,int</item>
         <item>AC,teamNumber,int</item>
-        <item>AD,teamName,String</item>
+        <!--<item>AD,teamName,String</item>-->
         <item>AE,robotAllianceInfo,String</item>
         <item>AF,autonHighMakes,int</item>
         <item>AG,autonHighMisses,int</item>
