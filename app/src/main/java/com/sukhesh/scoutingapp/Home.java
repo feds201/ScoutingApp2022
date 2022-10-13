@@ -75,7 +75,6 @@ public class Home extends Fragment {
         String[] rawStringValues = getResources().getStringArray(R.array.quals);
 
         // if you already loaded the matches, then don't overwrite data
-        sp.edit().putString("json", "").apply();
         String rawJSONValue = sp.getString("json", "");
         if (rawJSONValue.equals("")) {
             try {
