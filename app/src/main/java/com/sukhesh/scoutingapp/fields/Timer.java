@@ -89,5 +89,19 @@ public class Timer {
         }
 
         return timers;
+
+    }
+    public void updateValue(JSONStorage js, String matchName) {
+        this.value = js.getInt(matchName, this.name);
+        long secs = this.value / 1000;
+        int mins = (int)secs / 60;
+        secs = secs % 60;
+
+        if (mins < 10) {
+            this.time.setText("0" + mins + ":" + secs);
+        } else {
+            this.time.setText(mins + ":" + secs);
+        }
+
     }
 }

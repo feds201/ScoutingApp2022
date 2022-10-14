@@ -149,6 +149,7 @@ public class RapidReactInput extends Fragment {
         rootView.findViewsWithText(rawViews, "Timer", View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION);
         ArrayList<Timer> timers = Timer.generateArrayListFromViews(rawViews);
         for(Timer t: timers) {
+            t.updateValue(storage, matchName);
             t.start.setOnClickListener(view -> {
                 if(!t.running){
                     t.time.setBase(SystemClock.elapsedRealtime() - t.value);
