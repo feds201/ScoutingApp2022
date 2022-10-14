@@ -32,22 +32,6 @@ public class Home extends Fragment {
          */
         // access to this view (see fragment_home.xml)
         // TODO: create a button / input to achieve this!
-
-        SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
-        new Thread(() -> {
-            String rawMatches = BlueAllianceAPI.RequestMatchesByEventCode("2021mibg", "5ED1uRm7sTzNCXRwuSyPUnFt3uFuDVpO0lZKFQplA2EjCOsqwSWNzQpqwTTRM2ba");
-            BlueAllianceAPI.SendRawMatchesToSharedPreferences(sp, rawMatches); // TODO: possibly error prone based on how long the request takes....
-        }).start();
-
-        String rawMatches = BlueAllianceAPI.GetRawMatchesFromSharedPreferences(sp);
-
-        // TODO: ideally the color code would come from a LIST or a DROPDOWN so no one messes it up
-        String[] matches = BlueAllianceAPI.returnMatchListFromRequestString(rawMatches, "B1");
-        assert matches != null;
-        for(String s: matches) {
-            Log.d("matches", s);
-        }
-
         View homeView;
         Configuration config = getResources().getConfiguration();
         if (config.smallestScreenWidthDp >= 600) {
@@ -56,12 +40,23 @@ public class Home extends Fragment {
             homeView = inflater.inflate(R.layout.fragment_home_phone, container, false);
         }
 
-        Button btn = homeView.findViewById(R.id.buttonofgreatness);
-        btn.setOnClickListener(view -> {
-            FragmentTransaction fr = getParentFragmentManager().beginTransaction();
-            fr.replace(R.id.body_container, new BlueAlliance());
-            fr.commit();
-        });
+        SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
+        new Thread(() -> {
+            String eventCode = sp.getString("eventCode", "2021mibg");
+            String rawMatches = BlueAllianceAPI.RequestMatchesByEventCode(eventCode, "5ED1uRm7sTzNCXRwuSyPUnFt3uFuDVpO0lZKFQplA2EjCOsqwSWNzQpqwTTRM2ba");
+            Log.d("rawMatches", rawMatches);
+            BlueAllianceAPI.SendRawMatchesToSharedPreferences(sp, rawMatches); // TODO: possibly error prone based on how long the request takes....
+        }).start();
+
+        String rawMatches = BlueAllianceAPI.GetRawMatchesFromSharedPreferences(sp);
+        // TODO: ideally the color code would come from a LIST or a DROPDOWN so no one messes it up
+        String colorCode = sp.getString("colorCode", "R1");
+        Log.d("raw", String.valueOf(rawMatches.length()));
+        Log.d("raw", colorCode);
+        String[] matches = BlueAllianceAPI.returnMatchListFromRequestString(rawMatches, colorCode);
+//        for(String s: matches) {
+//            Log.d("matches", s);
+//        }
 
         // access to the view's recycler view object
         RecyclerView qualsList = homeView.findViewById(R.id.rvQuals);
@@ -72,7 +67,6 @@ public class Home extends Fragment {
          * Instantiate Match list from quals.xml using Matches object
          */
         // collect the matches from strings.xml
-        String[] rawStringValues = getResources().getStringArray(R.array.quals);
 
         // if you already loaded the matches, then don't overwrite data
         String rawJSONValue = sp.getString("json", "");
@@ -98,15 +92,11 @@ public class Home extends Fragment {
             editor.putString("currentMatch", matchName);
             editor.apply();
 
-            BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
-            bottomNav.setSelectedItemId(R.id.dashboard);
-
             FragmentTransaction fr = getParentFragmentManager().beginTransaction();
             fr.replace(R.id.body_container, new RapidReactInput());
             fr.commit();
         });
-
-
+//
         return homeView;
 
     }

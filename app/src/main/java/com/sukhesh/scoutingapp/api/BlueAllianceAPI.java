@@ -37,7 +37,8 @@ public class BlueAllianceAPI {
         params.put("X-TBA-Auth-Key", TBAAuthKey);
         String paramsStr = getParamsString(params);
         String getURL = BLUE_ALLIANCE_API_URI + "event/" + eventCode + "/matches?" + paramsStr;
-        return sendGetRequest(getURL);
+        String getRequest = sendGetRequest(getURL);
+        return getRequest;
     }
 
     public static void SendRawMatchesToSharedPreferences(SharedPreferences sp, String rawMatches) {

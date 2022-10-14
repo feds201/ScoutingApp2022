@@ -1,11 +1,13 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="Theme.Fragment" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Fragment" parent="Theme.MaterialComponents.DayNight">
         <item name="android:statusBarColor">#778DA9</item>
         <item name="android:navigationBarColor">#000000</item>
+        <item name="colorPrimary">#778DA9</item>
+        <item name="android:textColor">@color/FEDS_WHITE</item>
         <item name="colorControlNormal">@color/FEDS_WHITE</item>
         <item name="colorControlActivated">@color/FEDS_WHITE</item>
     </style>
+
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">#14192f</item>
         <item name="android:navigationBarColor">#333449</item>

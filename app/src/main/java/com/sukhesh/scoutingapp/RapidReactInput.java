@@ -40,6 +40,7 @@ public class RapidReactInput extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_rapid_react_dashboard_phone, container, false);
         }
         SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
+        Log.d("quals", sp.getString("json", "NOT FOUND"));
         String matchName = sp.getString("currentMatch", "Q1");
         JSONStorage storage = new JSONStorage(sp);
         TextView title = rootView.findViewById(R.id.title_dashboard);
@@ -193,13 +194,13 @@ public class RapidReactInput extends Fragment {
 //        Button stop = rootView.findViewById(R.id.stop);
 //        Button reset = rootView.findViewById(R.id.reset);
 //        //Zayn the long variable at the top declared globally is the number to add to shared pref (its called stop, feel free to change it to something else)
-//        //Even if the actual stopwatch displays in seconds the long variable contains the milliseconds
-//        //If you wanna see declare a new global variable of a textview title like endgame title or something and then make it equal the stop variable. It shows the exact time when you press the stop button.
-//            start.setOnClickListener(view -> {
-//                startStopwatch();
-//            });
-//            stop.setOnClickListener(view -> {
-//                stopStopwatch();
+////        //Even if the actual stopwatch displays in seconds the long variable contains the milliseconds
+////        //If you wanna see declare a new global variable of a textview title like endgame title or something and then make it equal the stop variable. It shows the exact time when you press the stop button.
+////            start.setOnClickListener(view -> {
+////                startStopwatch();
+////            });
+////            stop.setOnClickListener(view -> {
+////                stopStopwatch();
 //            });
 //            reset.setOnClickListener(view -> {
 //                resetStopwatch();

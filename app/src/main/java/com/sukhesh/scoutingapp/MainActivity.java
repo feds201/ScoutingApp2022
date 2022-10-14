@@ -1,61 +1,72 @@
 package com.sukhesh.scoutingapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Menu;
+import android.view.Gravity;
+import android.view.MenuItem;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
-
-    // TODO: make better comments
+    public DrawerLayout drawerLayout;
+    public ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideSystemBars();
-
-        //Set the content view to the layout file activity_main
         setContentView(R.layout.activity_main);
 
-        // Store bottomNavigationView from design to variable to interact with
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-        // Initially call the fragment manager to show the first page
-        // TODO: Instead of starting this at home every time, have this open to the fragment last opened
+        drawerLayout = findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         transitionToFragment(new Home());
-        bottomNavigationView.setSelectedItemId(R.id.home); // start the app in the home fragment.
 
-        /*
-         * An event listener to change the fragment based on which icon on the nav bar is pressed.
-         */
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-
+        NavigationView nav = findViewById(R.id.nav_menu);
+        nav.setNavigationItemSelectedListener(item -> {
             Fragment fragment = null;
-            //If the case of a certain icon press is met, switch the view to the other view
-            switch (item.getItemId()) {
-
-                case R.id.home:
+            switch(item.getItemId()) {
+                case R.id.nav_home:
                     fragment = new Home();
                     break;
 
-                case R.id.dashboard:
+                case R.id.nav_input:
                     fragment = new RapidReactInput();
                     break;
 
+                case R.id.nav_setup:
+                    fragment = new Setup();
+                    break;
+
+                case R.id.nav_settings:
+                    fragment = new Settings();
+                    break;
             }
-
-            assert fragment != null; // a safety check, for sure, but for what? How could this be null?
             transitionToFragment(fragment);
-
-            return true;
+            drawerLayout.closeDrawer(Gravity.LEFT);
+            return false;
         });
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void transitionToFragment(Fragment fragment) {

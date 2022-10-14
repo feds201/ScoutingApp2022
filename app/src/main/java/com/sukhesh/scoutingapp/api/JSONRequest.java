@@ -1,5 +1,7 @@
 package com.sukhesh.scoutingapp.api;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.Map;
 
