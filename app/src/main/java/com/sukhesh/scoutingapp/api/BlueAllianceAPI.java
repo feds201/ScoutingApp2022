@@ -14,11 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BlueAllianceAPI {
-
-    //TODO: does this really need to be public and final?
     public static final String BLUE_ALLIANCE_API_URI = "https://www.thebluealliance.com/api/v3/";
-
-
     /**
      * Calls the Blue Alliance API URL with the eventCode to get information about the matches at that event.
      *
@@ -27,12 +23,6 @@ public class BlueAllianceAPI {
      * @return The JSON string returned by the request.
      */
     public static String RequestMatchesByEventCode(String eventCode, String TBAAuthKey) {
-        /*
-            NOTE: This method is separate from the others as it is the only function that requires
-                  use of the internet. As we want the app to rely on the internet as least as
-                  possible, the rest of the functions can be used with or without the internet
-         */
-        // TODO: could we generalize this even more?
         HashMap<String, String> params = new HashMap<>();
         params.put("X-TBA-Auth-Key", TBAAuthKey);
         String paramsStr = getParamsString(params);

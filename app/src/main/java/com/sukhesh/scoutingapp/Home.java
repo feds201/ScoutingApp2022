@@ -27,12 +27,6 @@ import org.json.JSONException;
 public class Home extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        /*
-         * Set up the RecyclerView (essentially a list of items) for the list of quals
-         */
-        // access to this view (see fragment_home.xml)
-        // TODO: create a button / input to achieve this!
-
         SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
         new Thread(() -> {
             String eventCode = BlueAllianceAPI.GetEventCodeFromSharedPreferences(sp);
@@ -48,16 +42,6 @@ public class Home extends Fragment {
         // TODO: ideally the color code would come from a LIST or a DROPDOWN so no one messes it up
         String colorCode = BlueAllianceAPI.GetColorCodeFromSharedPreferences(sp);
         String[] matches = BlueAllianceAPI.returnMatchListFromRequestString(rawMatches, colorCode, getResources().getStringArray(R.array.quals));
-//        for(String s: matches) {
-//            Log.d("matches", s);
-//        }
-
-        /*
-         * Instantiate Match list from quals.xml using Matches object
-         */
-        // collect the matches from strings.xml
-
-        // if you already loaded the matches, then don't overwrite data
         String rawJSONValue = sp.getString("json", "");
         if (rawJSONValue.equals("")) {
             try {
@@ -75,17 +59,10 @@ public class Home extends Fragment {
             homeView = inflater.inflate(R.layout.fragment_home_phone, container, false);
         }
 
-        // access to the view's recycler view object
         RecyclerView qualsList = homeView.findViewById(R.id.rvQuals);
-        // set the layout for the recycler
         qualsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
-        /*
-         * Set up what happens when a Qual is pressed
-         */
         QualsRecyclerViewAdapter qualsAdapter = new QualsRecyclerViewAdapter(getActivity(), JSONStorage.GetListOfMatches(sp));
-        // use our adaptor, see QualsRecyclerViewAdapter, to interact with the Quals RecycleView
         qualsList.setAdapter(qualsAdapter);
         qualsList.setItemAnimator(new DefaultItemAnimator());
 
@@ -99,8 +76,7 @@ public class Home extends Fragment {
             fr.replace(R.id.body_container, new RapidReactInput());
             fr.commit();
         });
-//
-        return homeView;
 
+        return homeView;
     }
 }

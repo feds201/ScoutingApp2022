@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.sukhesh.scoutingapp.api.BlueAllianceAPI;
 
@@ -22,7 +23,6 @@ public class Setup extends Fragment {
         View setupView = inflater.inflate(R.layout.fragment_setup_phone, container, false);
         SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
         EditText competitionCodeInput = setupView.findViewById(R.id.compcodeinput);
-//        EditText TBAAuthCodeInput = setupView.findViewById(R.id.tbhauthcode);
         EditText colorCodeInput = setupView.findViewById(R.id.alliancecolor);
         Button submitButton = setupView.findViewById(R.id.submit);
 
@@ -36,22 +36,9 @@ public class Setup extends Fragment {
             if(!competitionCodeInput.getText().toString().equals("")) {
                 BlueAllianceAPI.SendEventCodeToSharedPreferences(sp, competitionCodeInput.getText().toString());
             }
-//            String compCode = competitionCodeInput.getText().toString();
-//            String TBAAuth = TBAAuthCodeInput.getText().toString();
-//            String colorCode = colorCodeInput.getText().toString();
-//
-//            int lenCompCode = compCode.length();
-//            int lenTBACode = TBAAuth.length();
-//            int lenColorCode = colorCode.length();
-//
-//            if(lenCompCode >= 4 && lenCompCode <= 13 && lenColorCode == 2) {
-//                SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
-//                SharedPreferences.Editor edit = sp.edit();
-//                edit.putString("eventCode", compCode);
-//                edit.putString("colorCode", colorCode);
-//                edit.putString("rawMatches", "");
-//                edit.apply();
-//            }
+            Toast.makeText(getActivity(), "Submitted!", Toast.LENGTH_LONG).show();
+            competitionCodeInput.setText("");
+            colorCodeInput.setText("");
         });
 
         return setupView;

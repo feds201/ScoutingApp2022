@@ -36,7 +36,6 @@ public class JSONStorage {
             j.put("matchType", s[0]);
             j.put("matchNumber", Integer.parseInt(s[1]));
             j.put("teamNumber", Integer.parseInt(s[2]));
-            //j.put("teamName", s[3]);
             j.put("robotAllianceInfo", s[3]);
             jo.put(match, j);
         }

@@ -19,13 +19,11 @@
         } else {
             setContentView(R.layout.activity_splash_phone);
         }
-        //hide annoying toolbar
 
-        //Run the splash screen for 4 seconds and switch to main activity
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             Intent intent = new Intent(Splash.this, MainActivity.class);
             startActivity(intent);
             finish();
-        }, 00);
+        }, 2000);
     }
 }

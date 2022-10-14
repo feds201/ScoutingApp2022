@@ -11,6 +11,8 @@
         <item name="iconTint">@color/FEDS_WHITE</item>
         <item name="homeAsUpIndicator">@color/FEDS_WHITE</item>
         <item name="actionBarTheme">@style/ActionBar.theme</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColor">@color/FEDS_BLACK</item>
     </style>
 
     <style name="Theme.Tablet" parent="Theme.MaterialComponents.DayNight">
@@ -25,6 +27,8 @@
         <item name="iconTint">@color/FEDS_WHITE</item>
         <item name="homeAsUpIndicator">@color/FEDS_WHITE</item>
         <item name="actionBarTheme">@style/ActionBar.theme</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColor">@color/FEDS_BLACK</item>
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
