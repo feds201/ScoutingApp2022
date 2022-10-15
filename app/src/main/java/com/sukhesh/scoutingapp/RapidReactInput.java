@@ -47,14 +47,17 @@ public class RapidReactInput extends Fragment {
             case "Q":
                 title.setText("Qualification " + storage.getInt(matchName,"matchNumber"));
                 break;
-            case "PO":
-                title.setText("Playoff " + storage.getInt(matchName,"matchNumber"));
+            case "QF":
+                title.setText("Quarter Final " + storage.getInt(matchName,"matchNumber"));
                 break;
             case "SF":
                 title.setText("Semi Final " + storage.getInt(matchName,"matchNumber"));
                 break;
             case "F":
                 title.setText("Final " + storage.getInt(matchName,"matchNumber"));
+                break;
+            case "EF":
+                title.setText("EINSTEIN FINAL " + storage.getInt(matchName,"matchNumber"));
                 break;
         }
 

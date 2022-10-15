@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.core.util.SizeFCompat;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,21 +22,32 @@ public class Setup extends Fragment {
         SharedPreferences sp = requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE);
         EditText competitionCodeInput = setupView.findViewById(R.id.compcodeinput);
         EditText colorCodeInput = setupView.findViewById(R.id.alliancecolor);
+        EditText tbaAuthInput = setupView.findViewById(R.id.tbhauthcode);
         Button submitButton = setupView.findViewById(R.id.submit);
 
         submitButton.setOnClickListener(view -> {
             SharedPreferences.Editor edit = sp.edit();
             edit.putString("json", "");
             edit.apply();
-            if(!colorCodeInput.getText().toString().equals("")) {
-                BlueAllianceAPI.SendColorCodeToSharedPreferences(sp, colorCodeInput.getText().toString());
+            if(tbaAuthInput.getText().toString().equals("ilovescouting22")) {
+                if(!colorCodeInput.getText().toString().equals("")) {
+                    BlueAllianceAPI.SendColorCodeToSharedPreferences(sp, colorCodeInput.getText().toString());
+                }
+                if(!competitionCodeInput.getText().toString().equals("")) {
+                    BlueAllianceAPI.SendEventCodeToSharedPreferences(sp, competitionCodeInput.getText().toString());
+                }
+                Toast.makeText(getActivity(), "Submitted!", Toast.LENGTH_LONG).show();
+
+                competitionCodeInput.setText("");
+                colorCodeInput.setText("");
+                tbaAuthInput.setText("");
+
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("currentMatch", "Q1");
+                editor.apply();
+            } else {
+                Toast.makeText(getActivity(), "Please enter the correct auth code.", Toast.LENGTH_SHORT).show();
             }
-            if(!competitionCodeInput.getText().toString().equals("")) {
-                BlueAllianceAPI.SendEventCodeToSharedPreferences(sp, competitionCodeInput.getText().toString());
-            }
-            Toast.makeText(getActivity(), "Submitted!", Toast.LENGTH_LONG).show();
-            competitionCodeInput.setText("");
-            colorCodeInput.setText("");
         });
 
         return setupView;
