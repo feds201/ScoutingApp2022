@@ -1,6 +1,7 @@
 package com.sukhesh.scoutingapp.storage;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,15 +31,48 @@ public class JSONStorage {
     public static void addMatches(SharedPreferences sp, String[] rawMatchList) throws JSONException {
         JSONObject jo = new JSONObject();
         for (String value : rawMatchList) {
-            String[] s = value.split(",");
-            String match = s[0] + s[1] + " " + s[3];
-            JSONObject j = new JSONObject();
-            j.put("matchType", s[0]);
-            j.put("matchNumber", Integer.parseInt(s[1]));
-            j.put("teamNumber", Integer.parseInt(s[2]));
-            j.put("robotAllianceInfo", s[3]);
-            jo.put(match, j);
+            try {
+                String[] s = value.split(",");
+                String match = s[0] + s[1] + " " + s[3];
+                JSONObject j = new JSONObject();
+                j.put("matchType", s[0]);
+                j.put("matchNumber", Integer.parseInt(s[1]));
+                j.put("teamNumber", Integer.parseInt(s[2]));
+                j.put("robotAllianceInfo", s[3]);
+                jo.put(match, j);
+            }
+            catch (Error error) {
+                return; // don't do it if its buggy!!!!!
+            }
         }
+        SharedPreferences.Editor spEditor = sp.edit();
+        spEditor.putString("json", jo.toString());
+        spEditor.apply();
+    }
+    public static void appendMatches(SharedPreferences sp, String[] rawMatchList) throws JSONException {
+        String jsonString = sp.getString("json", null);
+        if (jsonString == null) {
+            return;
+        }
+        JSONObject jo = new JSONObject(jsonString);
+
+        for (String value : rawMatchList) {
+            try {
+                String[] s = value.split(",");
+                String match = s[0] + s[1] + " " + s[3];
+                JSONObject j = new JSONObject();
+                j.put("matchType", s[0]);
+                j.put("matchNumber", Integer.parseInt(s[1]));
+                j.put("teamNumber", Integer.parseInt(s[2]));
+                j.put("robotAllianceInfo", s[3]);
+                jo.put(match, j);
+            }
+            catch (Error error) {
+                return; // don't do it if its buggy!!!!!
+            }
+
+        }
+        Log.d("appendJson", jo.toString(4));
         SharedPreferences.Editor spEditor = sp.edit();
         spEditor.putString("json", jo.toString());
         spEditor.apply();

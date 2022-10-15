@@ -9,10 +9,13 @@
     <EditText
         android:id="@+id/input"
         android:layout_width="match_parent"
-        android:layout_height="700sp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Input like this: Qual 1, 201, R1"
+        android:layout_height="wrap_content"
+        android:minLines="3"
+        android:maxLines="6"
+        android:hint="matchType,matchNumber,teamNumber,colorCode"
+        android:gravity="top"
+        android:inputType="textNoSuggestions|textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

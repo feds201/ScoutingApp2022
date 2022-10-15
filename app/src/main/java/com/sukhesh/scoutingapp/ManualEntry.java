@@ -1,5 +1,6 @@
 package com.sukhesh.scoutingapp;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,11 +12,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.sukhesh.scoutingapp.storage.JSONStorage;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
 public class ManualEntry extends Fragment {
-    ArrayList<String> qualArr = new ArrayList<String>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_manual_entry, container, false);
@@ -23,21 +28,25 @@ public class ManualEntry extends Fragment {
         Button append = rootView.findViewById(R.id.appendButton);
         EditText input = rootView.findViewById(R.id.input);
 
-        append.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String x = String.valueOf(input);
-                String qual = x.substring( 0, x.indexOf(","));
-                String teamNum = x.substring(x.indexOf(",") + 2, x.indexOf(",", x.indexOf(",") + 1));
-                String y = x.substring(x.indexOf(",", x.indexOf(",") + 2), x.length());
-                String color = y.substring(2, y.length());
-                qualArr.add(qual);
+        create.setOnClickListener(view -> {
+            String rawString = input.getText().toString();
+            String[] strs = rawString.split("\n");
+            try {
+                JSONStorage.addMatches(requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE), strs);
+            } catch (JSONException e) {
+                Toast.makeText(getActivity(), "There was an error: please fix the order/syntax of your line.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        append.setOnClickListener(view -> {
+            String rawString = input.getText().toString();
+            String[] strs = rawString.split("\n");
+            boolean b = false;
+            try {
+                JSONStorage.appendMatches(requireContext().getSharedPreferences("matches", Context.MODE_PRIVATE), strs);
+            } catch (JSONException e) {
+                Toast.makeText(getActivity(), "There was a JSON exception!", Toast.LENGTH_SHORT).show();
             }
         });
         return rootView;
-    }
-
-    public ArrayList getList() {
-        return qualArr;
     }
 }
