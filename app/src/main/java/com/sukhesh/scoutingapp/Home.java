@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sukhesh.scoutingapp.api.BlueAllianceAPI;
 import com.sukhesh.scoutingapp.storage.JSONStorage;
+import com.sukhesh.scoutingapp.storage.MatchComparator;
 
 import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Home extends Fragment {
@@ -59,9 +64,14 @@ public class Home extends Fragment {
         RecyclerView qualsList = homeView.findViewById(R.id.rvQuals);
         qualsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ManualEntry manualEntry = new ManualEntry();
-//        QualsRecyclerViewAdapter qualsAdapter = new QualsRecyclerViewAdapter(getActivity(), manualEntry.getList());
-        QualsRecyclerViewAdapter qualsAdapter = new QualsRecyclerViewAdapter(getActivity(), JSONStorage.GetListOfMatches(sp));
+        ArrayList<String> listOfMatches = JSONStorage.GetListOfMatches(sp);
+        ArrayList<String> forQualsAdapter = MatchComparator.extractMatchTypeSorted(listOfMatches, "Q");
+        forQualsAdapter.addAll(MatchComparator.extractMatchTypeSorted(listOfMatches, "QF"));
+        forQualsAdapter.addAll(MatchComparator.extractMatchTypeSorted(listOfMatches, "SF"));
+        forQualsAdapter.addAll(MatchComparator.extractMatchTypeSorted(listOfMatches,"F"));
+        forQualsAdapter.addAll(MatchComparator.extractMatchTypeSorted(listOfMatches, "EF"));
+
+        QualsRecyclerViewAdapter qualsAdapter = new QualsRecyclerViewAdapter(getActivity(), forQualsAdapter);
         qualsList.setAdapter(qualsAdapter);
         qualsList.setItemAnimator(new DefaultItemAnimator());
 

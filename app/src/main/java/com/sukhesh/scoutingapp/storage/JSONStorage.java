@@ -33,7 +33,7 @@ public class JSONStorage {
         for (String value : rawMatchList) {
             try {
                 String[] s = value.split(",");
-                String match = s[0] + s[1] + " " + s[3];
+                String match = s[0] + s[1];
                 JSONObject j = new JSONObject();
                 j.put("matchType", s[0]);
                 j.put("matchNumber", Integer.parseInt(s[1]));
@@ -58,7 +58,7 @@ public class JSONStorage {
 
         for (String value : rawMatchList) {
             String[] s = value.split(",");
-            String match = s[0] + s[1] + " " + s[3];
+            String match = s[0] + s[1];
             JSONObject j = new JSONObject();
             j.put("matchType", s[0]);
             j.put("matchNumber", Integer.parseInt(s[1]));
